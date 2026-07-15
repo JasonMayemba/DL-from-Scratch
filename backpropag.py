@@ -20,7 +20,7 @@ class Backpropag:
         def backward():
             self.grad += out.grad
             other.grad += out.grad
-        out._backward = _backward
+        out._backward = backward
 
         return out
 
@@ -50,3 +50,20 @@ class Backpropag:
                     build(child)
         build(root)
         return nodes, edges
+
+    def draw_dot(root, filename='backpropagation_graph'):
+        dot = Digraph(format='png', graph_attr={'rankdir': 'LR'})
+        nodes, edges = Backpropag.trace(root)
+
+        for n in nodes:
+            uid = str(id(n))
+            dot.node(name=uid, label=f"{n.label}\ndata={n.data:.4f}\ngrad={n.grad:.4f}", shape='record')
+
+            if n._op:
+                dot.node(name=uid + n._op, label=n._op)
+                dot.edge(uid + n._op, uid)
+
+        for n1, n2 in edges:
+            dot.edge(str(id(n1)), str(id(n2)))
+
+        dot.render(filename, cleanup=True)
