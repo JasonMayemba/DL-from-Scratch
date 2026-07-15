@@ -24,3 +24,17 @@ def mini_batch_gradient_descent(x, y, theta, learning_rate=0.01, epochs=1000, ba
     cost_history : list
         List of cost values at each iteration.
     """
+    m = len(y)
+    cost_history = []
+
+    for _ in range(epochs):
+        # Shuffle the data
+        indices = np.arange(m)
+        np.random.shuffle(indices)
+        x_shuffled = x[indices]
+        y_shuffled = y[indices]
+
+        for i in range(0, m, batch_size):
+            x_batch = x_shuffled[i:i + batch_size]
+            y_batch = y_shuffled[i:i + batch_size]
+
