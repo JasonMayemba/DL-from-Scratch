@@ -67,3 +67,23 @@ class Backpropag:
             dot.edge(str(id(n1)), str(id(n2)))
 
         dot.render(filename, cleanup=True)
+
+if __name__ == "__main__":
+    # 1. Définir des variables d'entrée (poids w, entrée x, biais b)
+    x = Backpropag(2.0, label='x')
+    w = Backpropag(-3.0, label='w')
+    b = Backpropag(6.7, label='b')
+
+    # 2. Effectuer les calculs (Passe Avant)
+    wx = w * x; wx.label = 'w*x'
+    y = wx + b; y.label = 'y (sortie)'
+    
+    # 3. Lancer la rétropropagation (Passe Arrière)
+    y.backward()
+    
+    # 4. Générer le graphe visuel
+    graphe = Backpropag.draw_dot(y)
+    
+    # Sauvegarde le graphe dans un fichier "graphe_retroprop.svg" et l'ouvre
+    
+    print("Le graphe de calcul a été généré avec succès !")
