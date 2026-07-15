@@ -9,3 +9,6 @@ class Backpropag:
         self.label = label
         self.grad = 0.0  # Initialize gradient to zero
         self_backward = lambda: None  # Placeholder for backward function
+
+    def __repr__(self):
+        return f"Backpropag(data={self.data}, label={self.label})"
