@@ -12,3 +12,14 @@ class Backpropag:
 
     def __repr__(self):
         return f"Backpropag(data={self.data}, label={self.label})"
+
+    def __add__(self, other):
+        other = other if isinstance(other, Backpropag) else Backpropag(data=other)
+        out = Backpropag(_children=(self, other), _op='+', data=self.data + other.data)
+
+        def backward():
+            self.grad += out.grad
+            other.grad += out.grad
+        out._backward = _backward
+
+        return out 
