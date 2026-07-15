@@ -34,3 +34,10 @@ def stochastic_gradient_descent(x, y, theta, learning_rate=0.01, epochs=1000):
             cost = (1/(2*m)) * np.sum((prediction - y[i])**2)
             cost_history.append(cost)
 
+            # Compute gradients
+            gradients = (1/m) * np.dot(x[i].reshape(-1, 1), (prediction - y[i]).reshape(1, -1))
+
+            # Update theta
+            theta -= learning_rate * gradients
+
+    return theta, cost_history
