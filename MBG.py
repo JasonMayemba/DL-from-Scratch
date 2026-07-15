@@ -38,3 +38,17 @@ def mini_batch_gradient_descent(x, y, theta, learning_rate=0.01, epochs=1000, ba
             x_batch = x_shuffled[i:i + batch_size]
             y_batch = y_shuffled[i:i + batch_size]
 
+            # Forward propagation
+            predictions = np.dot(x_batch, theta)
+
+            # Compute cost
+            cost = (1/(2*len(y_batch))) * np.sum((predictions - y_batch)**2)
+            cost_history.append(cost)
+
+            # Compute gradients
+            gradients = (1/len(y_batch)) * np.dot(x_batch.T, (predictions - y_batch))
+
+            # Update theta
+            theta -= learning_rate * gradients
+
+    return theta, cost_history
