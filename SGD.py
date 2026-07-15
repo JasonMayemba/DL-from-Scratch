@@ -22,3 +22,15 @@ def stochastic_gradient_descent(x, y, theta, learning_rate=0.01, epochs=1000):
     cost_history : list
         List of cost values at each iteration.
     """
+    m = len(y)
+    cost_history = []
+
+    for _ in range(epochs):
+        for i in range(m):
+            # Forward propagation
+            prediction = np.dot(x[i], theta)
+
+            # Compute cost
+            cost = (1/(2*m)) * np.sum((prediction - y[i])**2)
+            cost_history.append(cost)
+
