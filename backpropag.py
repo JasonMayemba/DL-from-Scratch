@@ -39,3 +39,14 @@ class Backpropag:
         self.grad = 1.0 # Initialize the gradient of the output node to 1.0 (always)
         for node in reversed(topo):
             node._backward()  # Call the backward function for each node
+
+    def trace(root):
+        nodes, edges = set(), set()
+        def build(v):
+            if v not in nodes:
+                nodes.add(v)
+                for child in v._prev:
+                    edges.add((child, v))
+                    build(child)
+        build(root)
+        return nodes, edges
