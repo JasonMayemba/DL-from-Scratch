@@ -22,4 +22,20 @@ class Backpropag:
             other.grad += out.grad
         out._backward = _backward
 
-        return out 
+        return out
+
+    def backward(self):
+
+        topo = []
+        visited = set()
+        def build_topo(v):
+            if v not in visited:
+                visited.add(v)
+                for child in v._prev:
+                    build_topo(child)
+                topo.append(v)
+        build_topo(self)
+
+        self.grad = 1.0 # Initialize the gradient of the output node to 1.0 (always)
+        for node in reversed(topo):
+            node._backward()  # Call the backward function for each node
